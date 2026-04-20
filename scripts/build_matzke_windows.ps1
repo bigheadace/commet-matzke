@@ -1,5 +1,5 @@
 param(
-    [string]$VersionTag = "v0.4.1-matzke.7",
+    [string]$VersionTag = "v0.4.1-matzke.13",
     [string]$GitHash = "unknown",
     [string]$BuildDetail = "matzke"
 )
@@ -33,3 +33,9 @@ if (Test-Path $ZipPath) {
 
 Compress-Archive -Path (Join-Path $ReleaseDir "*") -DestinationPath $ZipPath
 Write-Host "Windows package written to $ZipPath"
+
+# --- Code signing (uncomment when SignPath cert is ready) ---
+# $SignTool = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe"
+# & $SignTool sign /tr http://timestamp.digicert.com /td sha256 /fd sha256 /a (Join-Path $ReleaseDir "commet-matzke.exe")
+# if ($LASTEXITCODE -ne 0) { throw "signtool failed with exit code $LASTEXITCODE" }
+# Write-Host "Executable signed"
